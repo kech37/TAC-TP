@@ -6,7 +6,7 @@
 .stack 2048
 
 dseg	segment
-    guru1 db '### # # ### # #   # # ### ### ### # # #'
+        guru1 db '### # # ### # #   # # ### ### ### # # #'
 	guru2 db '#   # # # # # #   ### # #  #  # # # # #'
 	guru3 db '# # # # ### # #   # # ###  #  ### #  # '
 	guru4 db '# # # # ##  # #   # # # #  #  ##  # # #'
@@ -70,7 +70,7 @@ dseg	segment
 	teclasair db 0
 	escalar db ?
 
-	;--------------OperaÁoes----------------
+	;--------------Opera√ßoes----------------
 	menuSoma db       '- Soma                   ';7
 	menuSubtracao db  '- Subtracao              ';12
 	menuProdutoE db   '- Produto por um escalar ';25
@@ -232,7 +232,7 @@ ciclo:
         mov   ah,0bh            ;funcao que verifica o buffer do teclado
         int   21h
         cmp   al,0ffh           ;Ve se tem Tecla no Buffer
-        jne   ciclo         	;Enquanto n„o tem tem tecla no buffer,espera
+        jne   ciclo         	;Enquanto n√£o tem tem tecla no buffer,espera
         mov   ah,08h            ;Funcao para ler do teclado/buffer
         int   21h            
         cmp   al,0              ;Ve se a tecla lida=0 (estendida)
@@ -247,7 +247,7 @@ ret
 le_tecla endp
 ;--------------------------------------------------------------------------------------------------
 
-;---COMPARA O SITIO ONDE ESTA O CURSOR QUANDO SE CARREGA NO ENTER E CHAMA A FUN«AO CONRESPONDENTE--
+;---COMPARA O SITIO ONDE ESTA O CURSOR QUANDO SE CARREGA NO ENTER E CHAMA A FUN√áAO CONRESPONDENTE--
 cmp_tecla proc
 
 	cmp posy,11
@@ -302,7 +302,7 @@ ret
 sair endp
 ;--------------------------------------------------------------------------------------------------
 
-;-------------------------------Actualizar posiÁao na tabela---------------------------------------
+;-------------------------------Actualizar posi√ßao na tabela---------------------------------------
 calc_pos_array proc
 	cima:
 	cmp tecla, 'H'
@@ -640,7 +640,7 @@ valoress:
 	mov ah, tecla
 	mov vector[si], ah
 	;-----------------------------------------
-	;-----------actualizar ecr„---------------
+	;-----------actualizar ecr√£---------------
 	mov aux, 160
 	mov aux2, 2
 	
@@ -664,7 +664,7 @@ valoress:
 	
 imprimirTeclaN:
 	mov ah, tecla	
-	mov es:[bx],ah;  alterar no ecr„
+	mov es:[bx],ah;  alterar no ecr√£
 	mov al,00000010b;verde
 	mov es:[bx+1],al
 	;-----------------------------------------
@@ -808,7 +808,7 @@ cicloX:
 	jne fora
 	;-----------------------------------
 
-trinSup:              ;-----------Verificar se È triangular superior 
+trinSup:              ;-----------Verificar se √© triangular superior 
 	inc vectory
 	inc vectorx
 	mov valorx, 0
@@ -864,7 +864,7 @@ cicloTSN:
 	loop cicloTSN
 ;--------------------------------------------------------------------
 
-verificacao2: ;-----------Verificar se È triangular inferior
+verificacao2: ;-----------Verificar se √© triangular inferior
 	;--------------iniciar variaveis----
 	mov ah, 0
 	mov al, limy
@@ -887,7 +887,7 @@ verificacao2: ;-----------Verificar se È triangular inferior
 	cmp ah, 30h
 	jne fora2
 
-trinInf:              ;-----------Verificar se È triangular inferior 
+trinInf:              ;-----------Verificar se √© triangular inferior 
 	
 	mov ah, 0
 	mov al, limx
@@ -1076,7 +1076,7 @@ ret
 menu_cla endp
 ;--------------------------------------------------------------------------------------------------
 
-;-------------------------------Menu das operaÁıes-------------------------------------------------
+;-------------------------------Menu das opera√ß√µes-------------------------------------------------
 menu_ope proc
 	call limpa_tela
 	call guru
@@ -1240,7 +1240,7 @@ ciclo2:
 
 	call ler_colunas
 	
-	mov al, limx;-------------------verificar se lin e col s„o iguais
+	mov al, limx;-------------------verificar se lin e col s√£o iguais
 	cmp limy, al
 	jne inicio111
 
@@ -1369,7 +1369,7 @@ valoress:
 	mov ah, tecla
 	mov vector[si], ah
 	;-----------------------------------------
-	;-----------actualizar ecr„---------------
+	;-----------actualizar ecr√£---------------
 	mov aux, 160
 	mov aux2, 2
 	
@@ -1393,7 +1393,7 @@ valoress:
 	
 imprimirTeclaN:
 	mov ah, tecla	
-	mov es:[bx],ah;  alterar no ecr„
+	mov es:[bx],ah;  alterar no ecr√£
 	mov al,00000010b;verde
 	mov es:[bx+1],al
 	;-----------------------------------------
@@ -1419,7 +1419,7 @@ ciclo52:                 ;-------------este ciclo inicializa a tabela
 		inc count_col
 		add bx, 8
 		mov ah, '-'
-		mov es:[bx],ah;  alterar no ecr„
+		mov es:[bx],ah;  alterar no ecr√£
 		mov al,00000010b;verde
 		mov es:[bx+1],al		
 		cmp count_col, 9
@@ -1488,7 +1488,7 @@ valoress2:
 	mov vector_seg[si], ah ;----------> problema a guardar
 	
 	;-----------------------------------------
-	;-----------actualizar ecr„---------------
+	;-----------actualizar ecr√£---------------
 	mov aux, 160
 	mov aux2, 2
 	
@@ -1512,7 +1512,7 @@ valoress2:
 	
 imprimirTeclaN2:
 	mov ah, tecla	
-	mov es:[bx],ah;  alterar no ecr„
+	mov es:[bx],ah;  alterar no ecr√£
 	mov al,00000010b;verde
 	mov es:[bx+1],al
 	;-----------------------------------------
@@ -1575,7 +1575,7 @@ cicloCorreY2:
 		mov si, ax
 		
 		mov ax,vectorfinal[si]
-		mov es:[bx],ax;  alterar no ecr„
+		mov es:[bx],ax;  alterar no ecr√£
 		mov al,00000010b;verde
 		mov es:[bx+1],al
 		add bx, 8
@@ -1595,7 +1595,7 @@ ret
 fazer_soma endp
 ;--------------------------------------------------------------------------------------------------
 
-;---------------------------------------Fazer SubtraÁ„o--------------------------------------------
+;---------------------------------------Fazer Subtra√ß√£o--------------------------------------------
 fazer_sub proc
 inicio111:
 	;------------num lin-------
@@ -1664,7 +1664,7 @@ ciclo2:
 
 	call ler_colunas
 	
-	mov al, limx;-------------------verificar se lin e col s„o iguais
+	mov al, limx;-------------------verificar se lin e col s√£o iguais
 	cmp limy, al
 	jne inicio111
 
@@ -1793,7 +1793,7 @@ valoress:
 	mov ah, tecla
 	mov vector[si], ah
 	;-----------------------------------------
-	;-----------actualizar ecr„---------------
+	;-----------actualizar ecr√£---------------
 	mov aux, 160
 	mov aux2, 2
 	
@@ -1817,7 +1817,7 @@ valoress:
 	
 imprimirTeclaN:
 	mov ah, tecla	
-	mov es:[bx],ah;  alterar no ecr„
+	mov es:[bx],ah;  alterar no ecr√£
 	mov al,00000010b;verde
 	mov es:[bx+1],al
 	;-----------------------------------------
@@ -1843,7 +1843,7 @@ ciclo52:                 ;-------------este ciclo inicializa a tabela
 		inc count_col
 		add bx, 8
 		mov ah, '-'
-		mov es:[bx],ah;  alterar no ecr„
+		mov es:[bx],ah;  alterar no ecr√£
 		mov al,00000010b;verde
 		mov es:[bx+1],al		
 		cmp count_col, 9
@@ -1912,7 +1912,7 @@ valoress2:
 	mov vector_seg[si], ah ;----------> problema a guardar
 	
 	;-----------------------------------------
-	;-----------actualizar ecr„---------------
+	;-----------actualizar ecr√£---------------
 	mov aux, 160
 	mov aux2, 2
 	
@@ -1936,7 +1936,7 @@ valoress2:
 	
 imprimirTeclaN2:
 	mov ah, tecla	
-	mov es:[bx],ah;  alterar no ecr„
+	mov es:[bx],ah;  alterar no ecr√£
 	mov al,00000010b;verde
 	mov es:[bx+1],al
 	;-----------------------------------------
@@ -1999,7 +1999,7 @@ cicloCorreY2:
 		mov si, ax
 		
 		mov ax,vectorfinal[si]
-		mov es:[bx],ax;  alterar no ecr„
+		mov es:[bx],ax;  alterar no ecr√£
 		mov al,00000010b;verde
 		mov es:[bx+1],al
 		add bx, 8
@@ -2088,7 +2088,7 @@ ciclo2:
 
 	call ler_colunas
 	
-	mov al, limx;-------------------verificar se lin e col s„o iguais
+	mov al, limx;-------------------verificar se lin e col s√£o iguais
 	cmp limy, al
 	jne inicio111
 
@@ -2241,7 +2241,7 @@ valoress:
 	mov ah, tecla
 	mov vector[si], ah
 	;-----------------------------------------
-	;-----------actualizar ecr„---------------
+	;-----------actualizar ecr√£---------------
 	mov aux, 160
 	mov aux2, 2
 	
@@ -2265,7 +2265,7 @@ valoress:
 	
 imprimirTeclaN:
 	mov ah, tecla	
-	mov es:[bx],ah;  alterar no ecr„
+	mov es:[bx],ah;  alterar no ecr√£
 	mov al,00000010b;verde
 	mov es:[bx+1],al
 	;-----------------------------------------
@@ -2328,7 +2328,7 @@ cicloCorreY2:
 		mov si, ax
 		
 		mov ax,vectorfinal[si]
-		mov es:[bx],ax;  alterar no ecr„
+		mov es:[bx],ax;  alterar no ecr√£
 		mov al,00000010b;verde
 		mov es:[bx+1],al
 		add bx, 8
