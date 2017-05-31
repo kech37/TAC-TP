@@ -13,6 +13,8 @@ dseg    segment para public 'data'
 	Op_sair 				db		'2) Sair$'
 	
 	Op_msg					db		'Escolha o numero da opcao que pretende!$'
+	
+	Op_msg_sair				db		'Tem a certeza que quer sair? (s/n)$'
 		
 	msg_final 				db		'Chegou ao final do labirinto! Parabens! Demorou:$'
 	msg_erro_jogo 			db		'[ERRO] Deve conter _ na posicao 20, 18 para ser possivel jogar!$'
@@ -21,6 +23,7 @@ dseg    segment para public 'data'
     Erro_Ler_Msg    		db      'Erro ao tentar ler do ficheiro$'
     Erro_Close      		db      'Erro ao tentar fechar o ficheiro$'
     Fich         			db      'default.txt',0
+	fname					db		'ultimotempo.txt',0
     HandleFich     			dw      0
     car_fich      		    db      ?
 	
@@ -112,7 +115,7 @@ Ler_tempo_fim PROC
 Ler_tempo_fim   ENDP 
 
 ;########################################################################
-goto_xy	macro		POSx,POSy
+goto_xy	macro	POSx,POSy
 		mov		ah,02h
 		mov		bh,0		; numero da página
 		mov		dl,POSx
@@ -171,7 +174,7 @@ IMPRIME_FICHEIRO PROC
 	jmp     ler_ciclo		; depois de abero vamos ler o ficheiro 
 	
 erro_abrir:
-	mostra Erro_Open
+	mostra 	Erro_Open
 	jmp     sair_imprime
 
 ler_ciclo:
@@ -197,7 +200,7 @@ fecha_ficheiro:				; vamos fechar o ficheiro
 	int     21h
 	jnc     sair_imprime
 	call 	limpa_tela	
-	mostra Erro_Close ; o ficheiro pode não fechar correctamente
+	mostra 	Erro_Close ; o ficheiro pode não fechar correctamente
 	
 sair_imprime:
 	ret
@@ -208,13 +211,13 @@ IMPRIME_FICHEIRO ENDP
 JOGO PROC
 	CALL Ler_TEMPO_Inicio
 POS_INICIAL:
-	mov al, 20
-	mov POSxa, al
-	mov POSx, al
+	mov 	al, 20
+	mov 	POSxa, al
+	mov 	POSx, al
 	
-	mov al, 18
-	mov POSya, al
-	mov POSy, al
+	mov 	al, 18
+	mov 	POSya, al
+	mov 	POSy, al
 	
 	goto_xy	POSx,POSy		; Vai para nova possição
 	mov 	ah, 08h			; Guarda o Caracter que está na posição do Cursor
@@ -234,7 +237,7 @@ CICLO:
 	int		10h		
 	mov		Car, al			; Guarda o Caracter que está na posição do Cursor
 	
-	cmp Car, '+'
+	cmp Car, '#'
 	JE POS_INICIAL
 	cmp Car, '-'
 	JE GANHOU
@@ -283,18 +286,18 @@ DIREITA:
 	jmp		CICLO
 	
 GANHOU:
-	CALL limpa_tela
-	CALL Ler_tempo_fim
+	CALL 	limpa_tela
+	CALL 	Ler_tempo_fim
 	
-	mov ax, Horas_inicio
-	sub Horas_fim, ax
-	mov ax, Minutos_inicio
-	sub Minutos_fim, ax
-	mov ax, Segundos_inicio
-	sub Segundos_fim, ax
+	mov 	ax, Horas_inicio
+	sub 	Horas_fim, ax
+	mov 	ax, Minutos_inicio
+	sub 	Minutos_fim, ax
+	mov 	ax, Segundos_inicio
+	sub 	Segundos_fim, ax
 	
 	goto_xy 1, 1
-	mostra msg_final
+	mostra 	msg_final
 	
 	MOV 	ax,Horas_fim
 	MOV 	bl, 10     
@@ -306,7 +309,7 @@ GANHOU:
 	MOV 	strHoras[2],'h'		
 	MOV 	strHoras[3],'$'
 	goto_xy 50, 1
-	mostra strHoras
+	mostra 	strHoras
 	
 	MOV		ax,Minutos_fim
 	MOV 	bl, 10     
@@ -318,7 +321,7 @@ GANHOU:
 	MOV 	strHoras[2],'m'		
 	MOV 	strHoras[3],'$'
 	goto_xy 54, 1
-	mostra strHoras
+	mostra 	strHoras
 	
 	MOV 	ax,Segundos_fim
 	MOV 	bl, 10     
@@ -330,9 +333,9 @@ GANHOU:
 	MOV 	strHoras[2],'s'		
 	MOV 	strHoras[3],'$'
 	goto_xy 58, 1
-	mostra strHoras
+	mostra 	strHoras
 	
-	call LE_TECLA
+	call 	LE_TECLA
 	
 SAI_JOGO:
 	ret
@@ -344,72 +347,82 @@ VERIFICA_POS PROC
 	mov		bh,0
 	int		10h			
 	mov		Car, al
-	cmp Car, '_'
-	JNE ERRO
+	cmp 	Car, '_'
+	JNE 	ERRO
 SUCESSO:
-	CALL JOGO
-	JMP SAI
+	CALL 	JOGO
+	JMP 	SAI
 ERRO:
-	call limpa_tela
+	call 	limpa_tela
 	goto_xy 1, 1
-	mostra msg_erro_jogo
+	mostra 	msg_erro_jogo
 	goto_xy 64, 1
-	call LE_TECLA
+	call 	LE_TECLA
 SAI:
 	ret
 VERIFICA_POS ENDP
 
 MENU PROC
 MENU_INT:
-	CALL limpa_tela
+	CALL 	limpa_tela
 	goto_xy 1, 1
-	mostra gamaze1
+	mostra 	gamaze1
 	goto_xy 1, 2
-	mostra gamaze2
+	mostra 	gamaze2
 	goto_xy 1, 3
-	mostra gamaze3
+	mostra 	gamaze3
 	goto_xy 1, 4
-	mostra gamaze4
+	mostra 	gamaze4
 	goto_xy 1, 5
-	mostra gamaze5
+	mostra 	gamaze5
 	
 	goto_xy 1, 7
-	mostra Op_jogo
+	mostra 	Op_jogo
 	goto_xy 1, 8
-	mostra Op_sair
+	mostra 	Op_sair
 	
 	goto_xy 1, 10
-	mostra Op_msg
+	mostra 	Op_msg
 	
 	goto_xy -1, -1
 	
-	CALL LE_TECLA
-	cmp al, '1'
-	JE LJOGO
-	cmp al, '2'
-	JE SAI
-	JMP MENU_INT
+	CALL 	LE_TECLA
+	cmp 	al, '1'
+	JE 		LJOGO
+	cmp 	al, '2'
+	JE 		SAI
+	JMP 	MENU_INT
 
 LJOGO:
-	CALL IMPRIME_FICHEIRO
-	CALL VERIFICA_POS
-	JMP MENU_INT
-SAI:	
+	CALL 	IMPRIME_FICHEIRO
+	CALL 	VERIFICA_POS
+	JMP 	MENU_INT
+SAI:
+	CALL limpa_tela
+	goto_xy 1, 1
+	mostra Op_msg_sair
+	CALL LE_TECLA
+	cmp al, 's'
+	JE GOREP
+	cmp al, 'n'
+	JE MENU_INT
+	JMP SAI
+GOREP:
 	ret
 MENU ENDP
 
 Main    Proc
 	
-	mov ax, dseg
-	mov ds, ax
+	mov 	ax, dseg
+	mov 	ds, ax
 
-	mov ax, 0b800h
-	mov es, ax
+	mov 	ax, 0b800h
+	mov 	es, ax
 	
-	CALL MENU
+	CALL 	MENU
 
 sai:
-	call limpa_tela
+	call 	limpa_tela
 	goto_xy 0, 0
 	mov     ah,4ch
 	int     21h	
